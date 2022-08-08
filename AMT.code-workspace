@@ -1,0 +1,73 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorTheme": "Electron vue darker",
+		"editor.tokenColorCustomizations": {
+			"[Electron vue darker]": {
+				"textMateRules": [
+					{
+						"name": "Variable and parameter name",
+						"scope": [
+							"variable.other.object.ts",
+							"variable.other.constant.ts",
+							"variable.other.readwrite.ts",
+							"variable.other.property.ts",
+							"variable.parameter.ts",
+							"support.variable.object.process.ts",
+							"support.variable.property.process.ts",
+							//"string.quoted.double"
+						],
+						"settings": {
+						//"foreground": "#001080"
+						}
+					},
+					{
+						"name": "Object literal",
+						"scope": [
+							"meta.object-literal.key.ts",
+						],
+						"settings": {
+							"foreground": "#82aaff"
+						},
+					},
+					{
+						//Must come after the object literal setting?
+						"name": "Seperator Reset",
+						"scope": [
+							"punctuation.separator.key-value.ts"
+						],
+						"settings": {
+							"foreground": "#a8b5d1ff"
+						},
+					},
+					{
+						//Must come after the object literal setting?
+						"name": "Variables",
+						"scope": [
+							"variable.other.object.ts",
+						],
+						"settings": {
+							"foreground": "#ffbf7b"
+							//"foreground": "#ffbf7b"
+						},
+					},
+					{
+						//Must come after the object literal setting?
+						"name": "Strings",
+						"scope": [
+							"punctuation.definition.string",
+							"string.quoted"
+						],
+						"settings": {
+							//"foreground": "#e2ffadec"
+						},
+					}
+				],
+			},
+		},
+	}
+}

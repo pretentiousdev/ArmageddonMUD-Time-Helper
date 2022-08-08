@@ -1,0 +1,99 @@
+html.clown {
+    /* custom dark bg color */
+    --el-bg-color: #9394a4;
+    --el-color-primary: #61ce61;
+    --el-text-color-primary: #e23939;
+    --el-text-color-regular: #973030;
+    background-color: var(--el-bg-color);
+    color:red;
+    --el-bg-color-overlay:var(--el-bg-color);
+    --el-bg-color-page:#ffffff;
+    /* Background of navbar and the up/downbuttons*/
+    --el-fill-color-light: #4373c1;
+  }
+
+ html.classic {
+    
+    /* --color:#78838f; */
+
+    /*background Color */
+    --el-bg-color:#e3dcd1;
+    background-color: var(--el-bg-color);
+    --el-bg-color-overlay:var(--el-bg-color);
+
+    --el-color-white: #e3dcd1;
+    
+ 
+    /* This handles border color for buttons and dropdowns */
+    --el-border-color: #c5c2bd;
+
+    /*Button-disabled color.*/
+    --el-color-primary-light-5: #8799ae;
+
+    /* This handles button hover borders */
+    --el-color-primary-light-7: #b8b3ab;
+    
+    /* Tag borders are set to this? */
+    --el-color-primary-light-8: #c5beb4;
+
+    /* Hover color for blue button? */
+    --el-color-primary-light-3: #8396ab;
+
+    /* Background of navbar and the up/downbuttons*/
+    --el-fill-color-light: #cbc6bc;
+
+    --el-input-bg-color: #ffffff;
+    --el-fill-color-blank: var(--el-bg-color);
+
+    --el-color-primary: #677687;
+
+    /* Primary color button click*/
+    --el-color-primary-dark-2: #5b6879;
+    --el-datepicker-active-color: #677687 !important;
+
+    /* Error stuff */
+    --el-color-danger: #c45656;
+    /* Error hover */
+    --el-color-danger-light-3: #dc6262;
+
+    --el-color-success: #529b2e;
+
+    --el-border-color-hover: #a69f94;
+    --el-text-color-disabled: #9fa2a9;
+
+    --el-button-hover-bg-color: rgb(0, 3, 0);
+    --el-menu-item-hover-fill: pink;
+    /* --el-text-color-primary: #e23939; */
+
+    --el-table-border-color: rgb(255, 0, 0);
+    
+    /* This is what the button hover is set to. */
+    --el-color-primary-light-9: #d4cec1;
+    /* Button text color? */
+    /* --el-text-color-regular: #973030; */
+    
+    /* color:red; */
+    
+    /* --el-bg-color-page:#ffffff; */
+
+    --el-datepicker-active-color:#677687;
+    /* Border color for dropdown/popup stuff. Also for timeline nodes */
+    --el-border-color-light: #c3bcb2;
+
+    /* This is what table borders are set to? */
+    --el-border-color-lighter: #d0cac1;
+
+
+    --el-button-hover-border-color: #ff0000;
+    /* --el-button-border-color:rgb(0, 225, 0); */
+    
+  }
+
+/* html.classic .el-date-picker {
+    --el-datepicker-active-color:#677687;
+} */
+
+html, body, div#app, div#mainapp{
+    margin: 0;
+    height: 100%
+}
