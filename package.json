@@ -14,7 +14,7 @@
     "element-plus": "^2.2.6",
     "luxon": "^2.4.0",
     "pinia": "^2.0.14",
-    "tauri-plugin-sql-api": "github:tauri-apps/tauri-plugin-sql#d8ea61f2cbe2dfc9bf0947bab87b1547dcc945d4",
+    "tauri-plugin-sql-api": "github:tauri-apps/tauri-plugin-sql#2191700775a436cdf0d734612a3af69a490cf268",
     "vue": "^3.2.25"
   },
   "devDependencies": {
