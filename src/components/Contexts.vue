@@ -34,7 +34,7 @@ async function askDeleteContext(context: ArmContext) {
             type: 'warning',
         }
     ).then(async () => {
-        if (context.id === settings.defaultContext) { settings.defaultContext = 1 }
+        if (context.id === settings.defaultContext) { settings.defaultContext = 2 }
         await data.deleteContext(context.id);
         ElNotification({
             title: 'Context Deleted',
@@ -52,7 +52,7 @@ async function askDeleteContext(context: ArmContext) {
 <template>
     <div>
         <div style="width:80%; margin:0 auto;"><span style="float:left">Default Context: <el-select style="padding-right:50px;width:500px;" v-model="settings.defaultContext" filterable placeholder="Select">
-                    <el-option v-for="item in data.allContexts" :key="item.id" :label="item.name" :value="item.id" />
+                    <el-option v-for="item in data.allContexts.slice(1)" :key="item.id" :label="item.name" :value="item.id" />
                 </el-select><el-button @click="vals.editContextVisible = true">+Context</el-button></span></div>
         <el-table :data="data.allContexts" style="width:80%; margin: 0 auto">
         <el-table-column label="Name" prop="name" />
@@ -61,7 +61,7 @@ async function askDeleteContext(context: ArmContext) {
                 <el-input v-model="vals.search" size="small" placeholder="Type to search" :clearable="true" />
             </template>
             <template #default="scope" width="100">
-                <span v-if="scope.row.id !== 1">
+                <span v-if="scope.row.id > 2">
                 <el-button type="danger" size="small" @click="askDeleteContext(scope.row)">
                     <el-icon size="18px"><Delete /></el-icon>
                 </el-button>

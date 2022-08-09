@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore('settings', () => {
   ];
 
   const theme = ref('light');
-  const defaultContext = ref(1);
+  const defaultContext = ref(2);
 
   async function loadSettings() {
     const kvs = await storage.kvLoadAll();

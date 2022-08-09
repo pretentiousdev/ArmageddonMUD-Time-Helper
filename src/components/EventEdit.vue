@@ -173,7 +173,7 @@ const handleEscape = () => {
             </el-form-item>
             <el-form-item prop="context" label="Context">
                 <el-select v-model="validateForm.context" filterable placeholder="Select" style="width:85%; margin: 0 auto">
-                    <el-option v-for="item in data.allContexts" :key="item.id" :label="item.name" :value="item.id" />
+                    <el-option v-for="item in data.allContexts.slice(1)" :key="item.id" :label="item.name" :value="item.id" />
                 </el-select>
             </el-form-item>
             <el-form-item prop="time" label="Time">
