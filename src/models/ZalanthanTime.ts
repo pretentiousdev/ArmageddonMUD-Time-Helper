@@ -229,7 +229,7 @@ export class ZalanthanTime {
 
     getMoons(): moonsState {
         let moons: moonsState = { jihae: '', lirathu: ''}
-        const day = this.day;
+        const day = this.day + 1;
         if ((day > 48 && day < 52) || (day > 163 && day < 168)) { // new moon
             moons.jihae = "Jihae is almost imperceptible"
         } else if ((day > 51 && day < 65) || (day > 167 && day < 181)) { //  waxing, new crescent
