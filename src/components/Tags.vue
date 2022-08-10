@@ -93,7 +93,7 @@ const tagsDataPage = computed(() => {
         <TagEdit :tag="editingTag" @close="editingTag = null; vals.tagEditVisible = false;"/>
     </el-dialog>
     <el-button @click="vals.tagEditVisible = true">+Tag</el-button>
-    <el-table :data="tagsDataPage" style="width:80%; margin: 0 auto">
+    <el-table :data="tagsDataPage" style="width:80%; margin: 0 auto" empty-text="No Tags">
         <el-table-column label="Name" prop="name" width="400" />
         <el-table-column label="Aliases">
             <template #default="props">

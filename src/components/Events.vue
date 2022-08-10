@@ -6,11 +6,14 @@
         <AlarmEdit :event="selectedEvent" @close="vals.newAlarmVisible = false" />
     </el-dialog>
     <el-dialog v-model="vals.searchOptionsVisible" :fullscreen="true" :destroy-on-close="true" title="Search Events">
-        <SearchEvents :filter="data.eventSearchFilter" @close="vals.searchOptionsVisible = false" @filter="(f) => data.eventSearchFilter = f" />
+        <SearchEvents :filter="data.eventSearchFilter" @close="vals.searchOptionsVisible = false"
+            @filter="(f) => data.eventSearchFilter = f" />
     </el-dialog>
-    <el-button style="float:right" @click="controller.pinned.visible = true" size="small" :icon="Collection">View Pinned</el-button>
-    <el-button v-if="data.eventSearchFilter === null" :icon="Search" @click="vals.searchOptionsVisible = true" size="small">Search</el-button>
-    
+    <el-button style="float:right" @click="controller.pinned.visible = true" size="small" :icon="Collection">View Pinned
+    </el-button>
+    <el-button v-if="data.eventSearchFilter === null" :icon="Search" @click="vals.searchOptionsVisible = true"
+        size="small">Search</el-button>
+
     <div v-else>
         Only displaying events that match searched parameters.
         <el-button size="small" @click="vals.searchFilterOptionsVisible = true">View</el-button>
@@ -19,95 +22,101 @@
         <el-button size="small" @click="data.eventSearchFilter = null">Clear</el-button>
     </div>
     <div>
-    <el-table :data="eventsDataPage" style="width:80%; margin: 0 auto; height:550px;" v-loading="data.filteringEvents"
-        element-loading-text="Searching Events...">
-        <el-table-column type="expand">
-            <template #default="props">
-                <div m="4">
-                    <!-- {{ data.getContext(props.row.context).name}} -->
-                    <table style="margin:0 auto;width:90%;">
-                        <tr>
-                            <td style="width:55%">
-                                <p m="t-0 b-2" style="white-space: pre-line">{{ props.row.description }}
-                                </p>
-                            </td>
-                            <td>
-                                <el-tag v-for="tag in props.row.tags" :key="tag" class="event-tag"
-                                    style="flex-wrap: wrap; margin-right:5px; margin-top: 2px; margin-bottom:2px;">
-                                    {{ data.getTag(tag).name }}
-                                </el-tag>
-                            </td>
-                        </tr>
-                    </table>
+        <el-table :data="eventsDataPage" style="width:80%; margin: 0 auto; height:550px;"
+            v-loading="data.filteringEvents" element-loading-text="Searching Events..." empty-text="No Events">
+            <el-table-column type="expand">
+                <template #default="props">
+                    <div m="4">
+                        <!-- {{ data.getContext(props.row.context).name}} -->
+                        <table style="margin:0 auto;width:90%;">
+                            <tr>
+                                <td style="width:55%">
+                                    <p m="t-0 b-2" style="white-space: pre-line">{{ props.row.description }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <el-tag v-for="tag in props.row.tags" :key="tag" class="event-tag"
+                                        style="flex-wrap: wrap; margin-right:5px; margin-top: 2px; margin-bottom:2px;">
+                                        {{ data.getTag(tag).name }}
+                                    </el-tag>
+                                </td>
+                            </tr>
+                        </table>
 
 
-                </div>
-            </template>
-        </el-table-column>
-        <el-table-column label="Title" prop="title" width="300" />
-        <!-- <el-table-column label="Date" prop="timestamp" width="300" /> -->
-        <el-table-column label="Date">
-            <template #default="scope">
-                {{ DateTime.fromJSDate(scope.row.timestamp)
-                        .toLocaleString(DateTime.DATETIME_SHORT)
-                }}
-            </template>
-        </el-table-column>
-        <el-table-column align="right">
-            <template #header>
-                <el-input v-model="vals.search" size="small" placeholder="Type to filter results" :clearable="true" />
-            </template>
-            <template #default="scope" width="100">
-                <el-button type="danger" size="small" @click="askDeleteEvent(scope.row)">
-                    <!-- <ion-icon name="trash-outline"></ion-icon>Delete -->
-                    <el-icon size="18px">
-                        <Delete />
-                    </el-icon>
-                </el-button>
-                <el-button size="small" @click="editingEvent = scope.row; editVisible = true">
-                    <!-- <ion-icon name="create-outline"></ion-icon>Edit -->
-                    <el-icon size="18px">
-                        <Edit />
-                    </el-icon>
-                </el-button>
-                <el-button size="small" @click="data.togglePinned(scope.row)" :type="scope.row.pinned ? 'primary' : 'default'">
-                    <el-icon size="18px">
-                        <CollectionTag />
-                    </el-icon>
-                </el-button>
-                <el-button size="small" @click="selectedEvent = scope.row; vals.viewVisible = true">
-                    <!-- <ion-icon name="eye-outline"></ion-icon>View -->
-                    <el-icon size="18px">
-                        <View />
-                    </el-icon>
-                </el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column label="Title" prop="title" width="300" />
+            <!-- <el-table-column label="Date" prop="timestamp" width="300" /> -->
+            <el-table-column label="Date">
+                <template #default="scope">
+                    {{ DateTime.fromJSDate(scope.row.timestamp)
+                            .toLocaleString(DateTime.DATETIME_SHORT)
+                    }}
+                </template>
+            </el-table-column>
+            <el-table-column align="right">
+                <template #header>
+                    <el-input v-model="vals.search" size="small" placeholder="Type to filter results"
+                        :clearable="true" />
+                </template>
+                <template #default="scope" width="100">
+                    <el-button type="danger" size="small" @click="askDeleteEvent(scope.row)">
+                        <!-- <ion-icon name="trash-outline"></ion-icon>Delete -->
+                        <el-icon size="18px">
+                            <Delete />
+                        </el-icon>
+                    </el-button>
+                    <el-button size="small" @click="editingEvent = scope.row; editVisible = true">
+                        <!-- <ion-icon name="create-outline"></ion-icon>Edit -->
+                        <el-icon size="18px">
+                            <Edit />
+                        </el-icon>
+                    </el-button>
+                    <el-button size="small" @click="data.togglePinned(scope.row)"
+                        :type="scope.row.pinned ? 'primary' : 'default'">
+                        <el-icon size="18px">
+                            <CollectionTag />
+                        </el-icon>
+                    </el-button>
+                    <el-button size="small" @click="selectedEvent = scope.row; vals.viewVisible = true">
+                        <!-- <ion-icon name="eye-outline"></ion-icon>View -->
+                        <el-icon size="18px">
+                            <View />
+                        </el-icon>
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
     <div style="margin: 0 auto">
-        <el-pagination v-model="page" v-on:current-change="(p: number) => {page = p}" :page-size="pageSize" layout="prev, pager, next" :total="eventsData.length" style="justify-content: center;" />
+        <el-pagination v-model="page" v-on:current-change="(p: number) => { page = p }" :page-size="pageSize"
+            layout="prev, pager, next" :total="eventsData.length" style="justify-content: center;"
+            :hide-on-single-page="true" />
     </div>
-    
+
     <el-dialog v-model="vals.searchFilterOptionsVisible" width="90%" :destroy-on-close="true">
         <el-descriptions class="margin-top" title="Search Parameters" direction="vertical" :column="1" border>
-            <el-descriptions-item v-if="data.eventSearchFilter?.tags" :label="data.eventSearchFilter.anyTags ? 'Any of Tags' : 'All of Tags'">
+            <el-descriptions-item v-if="data.eventSearchFilter?.tags"
+                :label="data.eventSearchFilter.anyTags ? 'Any of Tags' : 'All of Tags'">
                 <el-tag v-for="tag in data.eventSearchFilter.tags" :key="tag" class="event-tag"
                     style="flex-wrap: wrap; margin-right:5px; margin-top: 2px; margin-bottom:2px;">
                     {{ data.getTag(tag).name }}
                 </el-tag>
             </el-descriptions-item>
-            <el-descriptions-item v-if="data.eventSearchFilter?.words" :label="data.eventSearchFilter.anyWords ? 'Any of Words' : 'All of Words' ">
-                {{data.eventSearchFilter.words.join(", ") }}
+            <el-descriptions-item v-if="data.eventSearchFilter?.words"
+                :label="data.eventSearchFilter.anyWords ? 'Any of Words' : 'All of Words'">
+                {{ data.eventSearchFilter.words.join(", ") }}
             </el-descriptions-item>
             <el-descriptions-item v-if="data.eventSearchFilter?.contexts" label="Contexts">
-            {{data.eventSearchFilter.contexts.map((val) => { return data.getContext(val).name}).join(", ") }}
+                {{ data.eventSearchFilter.contexts.map((val) => { return data.getContext(val).name }).join(", ") }}
             </el-descriptions-item>
             <el-descriptions-item v-if="data.eventSearchFilter?.start" label="After Date">
-            {{DateTime.fromJSDate(data.eventSearchFilter.start).toLocaleString(DateTime.DATETIME_SHORT)}}
+                {{ DateTime.fromJSDate(data.eventSearchFilter.start).toLocaleString(DateTime.DATETIME_SHORT) }}
             </el-descriptions-item>
             <el-descriptions-item v-if="data.eventSearchFilter?.end" label="Before Date">
-            {{DateTime.fromJSDate(data.eventSearchFilter.end).toLocaleString(DateTime.DATETIME_SHORT)}}
+                {{ DateTime.fromJSDate(data.eventSearchFilter.end).toLocaleString(DateTime.DATETIME_SHORT) }}
             </el-descriptions-item>
         </el-descriptions>
     </el-dialog>
@@ -120,8 +129,9 @@
                 <el-button size="small" @click="editingEvent = selectedEvent; editVisible = true" icon="Edit">
                     Edit
                 </el-button>
-                <el-button @click="data.togglePinned(selectedEvent!)" :type="selectedEvent?.pinned === true ? 'primary' : 'default'" size="small" icon="CollectionTag">
-                    {{ selectedEvent?.pinned === true ? 'Unpin' : 'Pin'}}
+                <el-button @click="data.togglePinned(selectedEvent!)"
+                    :type="selectedEvent?.pinned === true ? 'primary' : 'default'" size="small" icon="CollectionTag">
+                    {{ selectedEvent?.pinned === true ? 'Unpin' : 'Pin' }}
                 </el-button>
             </template>
             <el-descriptions-item :span="2">

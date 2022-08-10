@@ -81,7 +81,7 @@ function askDeleteAlarm(alarm: ArmAlarm) {
         <AlarmEdit :alarm="vals.editingAlarm" @close="vals.editingAlarm = null; vals.alarmEditVisible = false;"/>
     </el-dialog>
     <el-button @click="vals.alarmEditVisible = true">+Alarm</el-button>
-    <el-table :data="alarmsDataPage" style="width:80%; margin: 0 auto">
+    <el-table :data="alarmsDataPage" style="width:80%; margin: 0 auto" empty-text="No Alarms">
     <el-table-column label="Date">
             <template #default="scope">
                 {{ DateTime.fromJSDate(scope.row.timestamp)
