@@ -181,7 +181,18 @@ const vals = reactive<{
 })
 
 const moons = computed(() => {
-  return selectedArmDate.value.getMoons();
+  let m = selectedArmDate.value.getMoons();
+  let moons = ""
+  if (m.jihae !== '') {
+    moons += m.jihae + "\n"
+  }
+  if (m.lirathu !== '') {
+    moons += m.lirathu + "\n"
+  }
+  if (m.blackmoon !== '') {
+    moons += m.blackmoon + "\n"
+  }
+  return moons
 })
 
 </script>
@@ -220,8 +231,8 @@ const moons = computed(() => {
     {{ relativeTimeString }} (IC)
   </p>
 
-  <p v-if="settings.displayMoons">
-    {{ moons.jihae }} <br /> {{ moons.lirathu }}
+  <p v-if="settings.displayMoons" style="white-space:pre">
+    {{ moons }}
   </p>
   <div style="margin-bottom:8px">
 
