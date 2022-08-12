@@ -10,6 +10,7 @@ import EventEdit from './EventEdit.vue';
 import { storeToRefs } from 'pinia'
 import { ElNotification } from 'element-plus';
 import ContextEdit from './ContextEdit.vue';
+import SearchMoons from './SearchMoons.vue';
 
 
 const settings = useSettingsStore();
@@ -195,12 +196,17 @@ const moons = computed(() => {
   return moons
 })
 
+const searchMoonsVisible = ref(false);
+
 </script>
 
 <template>
   <el-dialog v-model="newEventVisible" title="New Event" :destroy-on-close="true" width="80%"
     @open="eventDate = converterDate" center>
     <EventEdit :event="null" @close="newEventVisible = false" :date="eventDate" />
+  </el-dialog>
+  <el-dialog v-model="searchMoonsVisible" :destroy-on-close="true" :fullscreen="true">
+    <SearchMoons :reference-date="converterDate" @close="searchMoonsVisible = false" />
   </el-dialog>
   <el-dialog v-model="vals.editContextVisible"
     width="80%"
@@ -252,6 +258,9 @@ const moons = computed(() => {
               <ion-icon name="alarm-outline" style="font-size:20px;"></ion-icon>
             </el-button>
           </el-button-group>
+        </td>
+        <td>
+          <el-button @click="searchMoonsVisible = true">From Moons</el-button>
         </td>
         <td>
           <el-button v-if="timeTicker === null" style="width:163px;" @click="followTime">Follow current time.

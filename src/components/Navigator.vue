@@ -12,6 +12,7 @@ import Contexts from './Contexts.vue';
 import Timeline from './Timeline.vue';
 import PinnedView from './PinnedView.vue';
 import Help from './help/Help.vue';
+import SearchMoons from './SearchMoons.vue';
 const activeName = ref('time');
 const vals = reactive({
   settingsVisible: false

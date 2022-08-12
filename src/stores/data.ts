@@ -7,8 +7,7 @@ import { Tag, hasName } from '../models/Tag';
 import storage from '../services/Storage';
 import notify from '../services/Notifications'
 import { ArmContext } from '../models/ArmContext';
-import { filter } from 'lodash';
-import { breakpointsTailwind, useTitle } from '@vueuse/core';
+import { moonsState, ZalanthanTime } from '../models/ZalanthanTime';
 
 export const useDataStore = defineStore('data', () => {
     const allEvents: Ref<ArmEvent[]> = ref([]);
@@ -19,6 +18,7 @@ export const useDataStore = defineStore('data', () => {
     const tagIDMap: Ref<Map<number, Tag>> = ref(new Map<number, Tag>());
     const undefinedTag: Tag = {id: -1, name: 'Not a valid tag', description: '', aliases: [], contexts: []};
     let alarmCheck: null | number = null;
+    const moonsCache: moonsState[] = loadMoonsCache();
 
     const eventSearchFilter: Ref<filterOptions | null> = ref(null);
     const filteringEvents = ref(false);
@@ -103,6 +103,17 @@ export const useDataStore = defineStore('data', () => {
         ev.pinned = true;
         pinnedEvents.value.unshift(ev);
         return true;
+    }
+
+    function loadMoonsCache(): moonsState[] {
+        const d = new ZalanthanTime(new Date());
+        d.hour = 1;
+        const moons: moonsState[] = []
+        for (let i = 0; i < ZalanthanTime.daysPerMonth; i++) {
+            d.day = i;
+            moons.push(d.getMoons())
+        }
+        return moons;
     }
 
     function addSearchToPinned() {
@@ -465,6 +476,7 @@ export const useDataStore = defineStore('data', () => {
         togglePinned,
         filteredEvents,
         eventSearchFilter,
-        filteringEvents
+        filteringEvents,
+        moonsCache
      }
 });

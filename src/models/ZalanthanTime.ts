@@ -18,7 +18,7 @@ export function ordinalFor(num: number) {
     return suffix;
 }
 
-function withOrdinal(num: number) {
+export function withOrdinal(num: number) {
     return num + ordinalFor(num);
 }
 
@@ -33,10 +33,21 @@ export interface relativeZalanthanTime {
     diff: number
 }
 
+
 export interface moonsState {
     jihae: string,
+    jihaePos: "east" | "west" | "none",
+    jihaeHeight: "high" | "low" | "none",
+    jihaePhase: "new moon" | "gibbous" | "new crescent" | "crescent" | "full" | "half-moon" | "none",
+    jihaePhaseDirection: "waxing" | "waning" | "neither",
     lirathu: string,
+    lirathuPos: "east" | "west" | "none",
+    lirathuHeight: "high" | "low" | "none",
+    lirathuPhase: "new moon" | "gibbous" | "new crescent" | "crescent" | "full" | "half-moon" | "none",
+    lirathuPhaseDirection: "waxing" | "waning" | "neither",
     blackmoon: string,
+    blackmoonPos: "east" | "west" | "center" | "none",
+    blackmoonHeight: "high" | "low" | "none",
 }
 
 export class ZalanthanTime {
@@ -229,7 +240,10 @@ export class ZalanthanTime {
     };
 
     getMoons(): moonsState {
-        let moons: moonsState = { jihae: '', lirathu: '', blackmoon: '' }
+        let moons: moonsState = {
+            jihae: '', jihaePos: "none", jihaeHeight: "none", jihaePhase: "none", jihaePhaseDirection: "waning",
+            lirathu: '', lirathuPos: "none", lirathuHeight: "none", lirathuPhase: "none", lirathuPhaseDirection: "waning",
+            blackmoon: '', blackmoonPos: "none", blackmoonHeight: "none"}
         const day = this.day + 1;
         const JIHAE_RISE = 2;
         const JIHAE_SET = 5;
@@ -245,79 +259,134 @@ export class ZalanthanTime {
         if (jihaeCycle >= JIHAE_RISE && jihaeCycle <= JIHAE_SET) {
             if ((day > 48 && day < 52) || (day > 163 && day < 168)) { // new moon
                 moons.jihae = "Almost imperceptible, the red moon";
+                moons.jihaePhaseDirection = "neither"
+                moons.jihaePhase = "new moon"
             } else if ((day > 51 && day < 65) || (day > 167 && day < 181)) { //  waxing, new crescent
                 moons.jihae = "The thin, waxing crescent of the red moon";
+                moons.jihaePhaseDirection = "waxing";
+                moons.jihaePhase = "new crescent"
             } else if ((day > 64 && day < 78) || (day > 180 && day < 194)) { // waxing, crescent
                 moons.jihae = "The thick, waxing crescent of the red moon";
+                moons.jihaePhase = "crescent";
+                moons.jihaePhaseDirection = "waxing";
             } else if ((day > 77 && day < 92) || (day > 193 && day < 208)) { // half-moon
                 moons.jihae = "Half illuminated and waxing, the red moon";
+                moons.jihaePhase = "half-moon";
+                moons.jihaePhaseDirection = "waxing"
             } else if ((day > 123 && day < 138) || (day > 8 && day < 23)) {
                 moons.jihae = "Half illuminated and waning, the red moon";
+                moons.jihaePhase = "half-moon";
+                moons.jihaePhaseDirection = "waning"
             } else if ((day > 91 && day < 106) || (day > 207 && day < 222)) { // waxing, gibbous
                 moons.jihae = "The thick, waxing gibbous of the red moon";
+                moons.jihaePhase = "gibbous";
+                moons.jihaePhaseDirection = "waxing"
             } else if ((day > 105 && day < 110) || (day > 221 && day < 226)) { // full moon
                 moons.jihae = "Bright and full, the red moon";
+                moons.jihaePhase = "full";
+                moons.jihaePhaseDirection = "neither"
             } else if ((day > 109 && day < 124) || (day > 225 && day < 232) || (day > 0 && day < 9)) { // waning, gibbous
                 moons.jihae = "The thick, waning gibbous of the red moon";
+                moons.jihaePhase = "gibbous";
+                moons.jihaePhaseDirection = "waning"
             } else if ((day > 137 && day < 151) || (day > 22 && day < 36)) { // waning crescent
                 moons.jihae = "The thick, waning crescent of the red moon";
+                moons.jihaePhase = "crescent";
+                moons.jihaePhaseDirection = "waning"
             } else if ((day > 150 && day < 164) || (day > 35 && day < 49)) { // waning, new crescent
                 moons.jihae = "The thin, waning crescent of the red moon";
+                moons.jihaePhase = "new crescent";
+                moons.jihaePhaseDirection = "waning"
             }
 
             const pos = jihaeCycle < 4 ? "eastern" : "western";
+            moons.jihaePos = jihaeCycle < 4 ? "east" : "west";
 
             if (jihaeCycle == JIHAE_RISE || jihaeCycle == JIHAE_SET) {
                 moons.jihae += ` hangs low in the ${pos} sky`
+                moons.jihaeHeight = "low"
             } else {
                 moons.jihae += ` is high in the ${pos} sky`
+                moons.jihaeHeight = "high"
             }
         }
 
         if (lirathuCycle >= LIRATHU_RISE && lirathuCycle <= LIRATHU_SET) {
             if ((day > 0 && day < 3) || (day > 229 && day < 232)) { // New Moon
                 moons.lirathu = "Almost imperceptible, the white moon";
+                moons.lirathuPhase = "new moon";
+                moons.lirathuPhaseDirection = "neither";
             } else if (day > 2 && day < 31) { // waxing, new crescent
                 moons.lirathu = "The thin, waxing crescent of the white moon";
+                moons.lirathuPhase = "new crescent"
+                moons.lirathuPhaseDirection =  "waxing"
             } else if (day > 30 && day < 60) { // waxing, crescent
                 moons.lirathu = "The thick, waxing crescent of the white moon";
+                moons.lirathuPhase = "crescent"
+                moons.lirathuPhaseDirection = "waxing"
             } else if (day > 59 && day < 87) { // half-moon waxing
                 moons.lirathu = "Half illuminated and waxing, the white moon";
+                moons.lirathuPhase = "half-moon"
+                moons.lirathuPhaseDirection = "waxing"
             } else if (day > 146 && day < 174) { // half-moon waning
                 moons.lirathu = "Half illuminated and waning, the white moon";
+                moons.lirathuPhase = "half-moon"
+                moons.lirathuPhaseDirection = "waning"
             } else if (day > 86 && day < 115) { // waxing, gibbous
                 moons.lirathu = "The thick, waxing gibbous of the white moon";
+                moons.lirathuPhase = "gibbous"
+                moons.lirathuPhaseDirection = "waxing"
             } else if (day > 114 && day < 119) { // full moon
                 moons.lirathu = "Bright and full, the white moon";
+                moons.lirathuPhase = "full"
+                moons.lirathuPhaseDirection = "neither"
             } else if (day > 118 && day < 147) { // waning, gibbous
                 moons.lirathu = "The thick, waning gibbous of the white moon";
+                moons.lirathuPhase = "gibbous"
+                moons.lirathuPhaseDirection = "waning"
             } else if (day > 173 && day < 202) { // waning crescent
                 moons.lirathu = "The thick, waning crescent of the white moon";
+                moons.lirathuPhase = "crescent"
+                moons.lirathuPhaseDirection = "waning"
             } else if (day > 201 && day < 230) { // waning, new crescent
                 moons.lirathu = "The thin, waning crescent of the white moon";
+                moons.lirathuPhase = "new crescent"
+                moons.lirathuPhaseDirection = "waning"
             }
 
             const pos = lirathuCycle < 6 ? "eastern" : "western";
+            moons.lirathuPos = lirathuCycle < 6 ? "east" : "west";
 
             if (lirathuCycle == LIRATHU_RISE || lirathuCycle == LIRATHU_SET) {
                 moons.lirathu += ` hangs low in the ${pos} sky`
+                moons.lirathuHeight = "low"
             } else {
                 moons.lirathu += ` is high in the ${pos} sky`
+                moons.lirathuHeight = "high"
             }
         }
 
-        if (blackmoonCycle >= BLACKMOON_RISE && blackmoonCycle <= BLACKMOON_SET && this.hour !== 0 && this.hour !== 8) {
+        if (blackmoonCycle >= BLACKMOON_RISE && blackmoonCycle <= BLACKMOON_SET) {
             let pos = "center of the";
+            moons.blackmoonPos = "center"
             if (blackmoonCycle < 15) {
                 pos = "eastern"
+                moons.blackmoonPos = "east"
             } else if (blackmoonCycle > 15) {
                 pos = "western"
+                moons.blackmoonPos = "west"
             }
 
             if (blackmoonCycle == BLACKMOON_RISE || blackmoonCycle == BLACKMOON_SET) {
-                moons.blackmoon = `Hanging low in the ${pos} sky is the black moon`
+                if (this.hour !== 0 && this.hour !== 8) {
+                    moons.blackmoon = `Hanging low in the ${pos} sky is the black moon`
+                }
+                moons.blackmoonHeight = "low"   
             } else {
-                moons.blackmoon = `High in the ${pos} sky is the black moon`
+                if (this.hour !== 0 && this.hour !== 8) {
+                    moons.blackmoon = `High in the ${pos} sky is the black moon`
+                }
+                moons.blackmoonHeight = "high"
             }
         }
 
