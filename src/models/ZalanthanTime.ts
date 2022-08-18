@@ -574,7 +574,6 @@ export class ZalanthanTime {
             ((age - 1) * this.ageToOOCSeconds);
         time = time * 1000;
 
-        let d = new Date(time + ZalanthanTime.dawnOfTime.getTime());
         return new Date(time + ZalanthanTime.dawnOfTime.getTime());
     }
 }
