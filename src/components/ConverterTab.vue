@@ -201,8 +201,7 @@ const searchMoonsVisible = ref(false);
 </script>
 
 <template>
-  <el-dialog v-model="newEventVisible" title="New Event" :destroy-on-close="true" width="80%"
-    @open="eventDate = converterDate" center>
+  <el-dialog v-model="newEventVisible" title="New Event" :destroy-on-close="true" width="80%" center>
     <EventEdit :event="null" @close="newEventVisible = false" :date="eventDate" />
   </el-dialog>
   <el-dialog v-model="searchMoonsVisible" :destroy-on-close="true" :fullscreen="true">
@@ -247,7 +246,7 @@ const searchMoonsVisible = ref(false);
     <table style="margin:auto">
       <tr>
         <td>
-          <el-button @click="newEventVisible = true">+Event</el-button>
+          <el-button @click="eventDate = converterDate; newEventVisible = true">+Event</el-button>
         </td>
         <td>
           <el-button-group>
