@@ -2,7 +2,7 @@
 import { ElNotification } from 'element-plus';
 import { ArmEvent } from '../models/ArmEvent';
 import { useSettingsStore } from '../stores/settings';
-import { computed } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useDataStore } from '../stores/data';
 import { DateTime } from 'luxon';
 import { ZalanthanTime } from '../models/ZalanthanTime';
@@ -57,9 +57,36 @@ const ICTime = computed(() => {
     }
 })
 
+
+onBeforeMount(async () => {
+  queueRelativeTicker();
+})
+
+onBeforeUnmount(async() => {
+    clearTimeout(relativeTimeout);
+})
+
+let relativeTimeout: number;
+function queueRelativeTicker() {
+    comparisonDate.value = new Date();
+    if (props.event) {
+        let diff = props.event.timestamp.getTime() - Date.now();
+        //diff = 60000 - Math.abs(diff % 60000);
+        diff = diff % 60000;
+        if (diff <= 0) {
+            diff = 60000 + diff;
+        } else {
+            //diff = 60000 - diff;
+        }
+        relativeTimeout = setTimeout(queueRelativeTicker, diff);
+    }
+}
+
+
+const comparisonDate = ref(new Date())
 const relativeTime = computed(() => {
     if (props.event) {
-        return ZalanthanTime.relativeString(ZalanthanTime.relativeTime(new Date(), props.event.timestamp))
+        return ZalanthanTime.relativeString(ZalanthanTime.relativeTime(comparisonDate.value, props.event.timestamp))
     } else {
         return "Not calculated."
     }

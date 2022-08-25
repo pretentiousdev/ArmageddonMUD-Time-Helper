@@ -80,7 +80,7 @@
                             <CollectionTag />
                         </el-icon>
                     </el-button>
-                    <el-button size="small" @click="selectedEvent = scope.row; vals.viewVisible = true">
+                    <el-button size="small" @click="viewEvent(scope.row)">
                         <!-- <ion-icon name="eye-outline"></ion-icon>View -->
                         <el-icon size="18px">
                             <View />
@@ -260,9 +260,36 @@ const ICTime = computed(() => {
     }
 })
 
+function viewEvent(ev: ArmEvent) {
+    selectedEvent.value = ev;
+    vals.viewVisible = true;
+    if (selectedEvent.value) {
+        clearTimeout(relativeTimeout);
+    }
+    queueRelativeTicker();
+}
+
+let relativeTimeout: number;
+function queueRelativeTicker() {
+    comparisonDate.value = new Date();
+    if (selectedEvent.value) {
+        let diff = selectedEvent.value.timestamp.getTime() - Date.now();
+        //diff = 60000 - Math.abs(diff % 60000);
+        diff = diff % 60000;
+        if (diff <= 0) {
+            diff = 60000 + diff;
+        } else {
+            //diff = 60000 - diff;
+        }
+        relativeTimeout = setTimeout(queueRelativeTicker, diff);
+    }
+}
+
+
+const comparisonDate = ref(new Date())
 const relativeTime = computed(() => {
     if (selectedEvent.value) {
-        return ZalanthanTime.relativeString(ZalanthanTime.relativeTime(new Date(), selectedEvent.value.timestamp))
+        return ZalanthanTime.relativeString(ZalanthanTime.relativeTime(comparisonDate.value, selectedEvent.value.timestamp))
     } else {
         return "Not calculated."
     }
