@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; justify-content: center;">
     <el-button @click="data.fromICDateDialogVisible = true">From IC</el-button>
-    <el-date-picker :modelValue="props.date" @update:model-value="(val) => $emit('update:date', val)"
+    <el-date-picker :modelValue="props.date" @update:model-value="(val: Date) => $emit('update:date', val)"
       @focus="$emit('picker-opened')" type="datetime" placeholder="Pick a Date" format="YYYY/MM/DD hh:mm A"
       :clearable="false" />
     <el-button @click="data.adjusterVisible = true">Adjust IC</el-button>
@@ -18,7 +18,7 @@
       </span>
     </template>
   </el-dialog>
-  <ICTimeAdjuster v-model="data.adjusterVisible" @change="(val) => adjustTime(val)" />
+  <ICTimeAdjuster v-model="data.adjusterVisible" @change="(val: number) => adjustTime(val)" />
   
 </template>
 

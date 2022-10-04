@@ -105,7 +105,7 @@ function askDeleteAlarm(alarm: ArmAlarm) {
             </template>
         </el-table-column>
     </el-table>
-    <el-pagination v-model="page" :hide-on-single-page="true" v-on:current-change="(p) => {page = p}" :page-size="pageSize" layout="prev, pager, next" :total="alarmsData.length" style="justify-content: center;" />
+    <el-pagination v-model="page" :hide-on-single-page="true" v-on:current-change="(p: number) => {page = p}" :page-size="pageSize" layout="prev, pager, next" :total="alarmsData.length" style="justify-content: center;" />
 </template>
 
 <style scoped>

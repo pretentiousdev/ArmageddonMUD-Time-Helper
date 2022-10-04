@@ -7,7 +7,7 @@
     </el-dialog>
     <el-dialog v-model="vals.searchOptionsVisible" :fullscreen="true" :destroy-on-close="true" title="Search Events">
         <SearchEvents :filter="data.eventSearchFilter" @close="vals.searchOptionsVisible = false"
-            @filter="(f) => data.eventSearchFilter = f" />
+            @filter="(f: any) => data.eventSearchFilter = f" />
     </el-dialog>
     <el-button style="float:right" @click="controller.pinned.visible = true" size="small" :icon="Collection">View Pinned
     </el-button>

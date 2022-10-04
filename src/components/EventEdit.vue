@@ -144,7 +144,7 @@ const handleEscape = () => {
 
 <template>
     <el-dialog v-model="vals.newTagVisible" :destroy-on-close="true" title="New Tag">
-        <TagEdit @close="vals.newTagVisible = false;" @created="(id) => validateForm.tags.push(id)"
+        <TagEdit @close="vals.newTagVisible = false;" @created="(id: number) => validateForm.tags.push(id)"
             :alias="vals.newTagAlias" />
     </el-dialog>
     <div style="display: flex; justify-content: center;">

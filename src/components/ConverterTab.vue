@@ -270,7 +270,7 @@ const searchMoonsVisible = ref(false);
     </table>
   </div>
   <p>
-    <DateSelector :date="converterDate" @update:date="(val) => updateDate(val)" @picker-opened="pickerOpened" />
+    <DateSelector :date="converterDate" @update:date="(val: Date) => updateDate(val)" @picker-opened="pickerOpened" />
   </p>
 </template>
 

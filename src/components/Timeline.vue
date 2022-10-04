@@ -159,7 +159,7 @@ const handleLoad = (command: string) => {
                     </span>
                 </el-card>
             <span v-else>
-                <el-dropdown split-button class="hidden" size="small" @click="showHidden(ev.hidden)" @command="(v) => showHidden([v])">
+                <el-dropdown split-button class="hidden" size="small" @click="showHidden(ev.hidden)" @command="(v: ArmEvent) => showHidden([v])">
                     {{ev.hidden.length}} hidden
                     <template #dropdown>
                         <el-dropdown-menu>
